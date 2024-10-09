@@ -1,23 +1,3 @@
-// Define authorized users directly in the script
-const authorizedUsers = {
-    "users": [
-
-        {
-            "username": "Ali",
-            "email": "alicodes019@gmail.com",
-            "password": "12345678"
-        },
-        {
-            "username": "Hashim",
-            "email": "gbhatti.g1959@gmail.com",
-            "password": "MY-Firstcourse001"
-        }
-    ]
-};
-
-// Save authorized users to local storage for testing
-localStorage.setItem('authorizedUsers', JSON.stringify(authorizedUsers));
-
 
 function openPopup() {
     document.querySelector('.popup-container').style.display = 'block';
@@ -31,47 +11,50 @@ function openlogin() {
 }
 
 
+async function checkUserCredentials(event) {
+    event.preventDefault(); // Prevent form submission
 
-// Function to check user credentials
-function checkUserCredentials() {
-    const storedUsername = localStorage.getItem('username');
-    const storedEmail = localStorage.getItem('email');
-    const storedPassword = localStorage.getItem('password');
+    const username = localStorage.getItem('username');
+    const email = localStorage.getItem('email');
+    const password = localStorage.getItem('password');
 
-    // If any of the credentials are missing, redirect to the login page
-    if (!storedUsername || !storedEmail || !storedPassword) {
-        openPopup()
-        // Wait for 2 seconds before checking credentials
+    // Check if any credential is missing
+    if (!username || !email || !password) {
+        openPopup();
+        // Wait for 2 seconds before redirecting to the login page
         setTimeout(() => {
             openlogin();
         }, 2000);
-
+        return; // Exit the function if credentials are missing
     }
 
+    // Send credentials to the serverless function for verification
+    const response = await fetch('/.netlify/functions/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+    });
 
+    const result = await response.json();
 
-    // Retrieve users from local storage
-    const users = JSON.parse(localStorage.getItem('authorizedUsers')).users;
-    // Check against authorized users
-    const user = users.find(user =>
-        user.username === storedUsername &&
-        user.email === storedEmail &&
-        user.password === storedPassword
-    );
-
-    if (!user) {
-
-        openPopup()
-        // Wait for 2 seconds before checking credentials
+    if (response.ok) {
+        // Successful login, redirect to main page
+        window.open("main.html", "_parent"); // Navigate to your main page
+    } else {
+        // Handle login failure
+        console.log(result.message);
+        openPopup();
+        // Wait for 2 seconds before redirecting to the login page
         setTimeout(() => {
             openlogin();
         }, 2000);
-
-    }
-    else {
-        return;
     }
 }
+
+// Make sure to attach this function to your form submission
+// Example: document.getElementById('yourFormId').addEventListener('submit', checkUserCredentials);
 
 
 window.onload = checkUserCredentials

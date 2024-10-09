@@ -1,60 +1,42 @@
-// Define authorized users directly in the script
-const authorizedUsers = {
-    "users": [
+async function loginUser(event) {
+    event.preventDefault(); // Prevent form submission
 
-        {
-            "username": "Ali",
-            "email": "alicodes019@gmail.com",
-            "password": "12345678"
-        },
-        {
-            "username": "Hashim",
-            "email": "gbhatti.g1959@gmail.com",
-            "password": "MY-Firstcourse001"
+    // Retrieve user credentials from local storage
+    const username = localStorage.getItem('username');
+    const email = localStorage.getItem('email');
+    const password = localStorage.getItem('password');
+
+    // Prepare user data for sending to the server
+    const userData = { username, email, password };
+
+    try {
+        // Send a POST request to the Netlify serverless function
+        const response = await fetch('/.netlify/functions/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        });
+
+        // Parse the JSON response
+        const result = await response.json();
+
+        if (response.ok) {
+            // Successful login, redirect to the main page
+            console.log(result.message);
+            window.open("main.html", "_parent"); // Or navigate to your main page
+        } else {
+            // Access denied, log the message and redirect to login page
+            console.log(result.message);
+            openPopup(); // Show your error popup here
+            setTimeout(() => window.open("login.html", "_parent"), 2000); // Redirect after a delay
         }
-    ]
-};
-
-// Save authorized users to local storage for testing
-localStorage.setItem('authorizedUsers', JSON.stringify(authorizedUsers));
-
-// Function to check user credentials
-function checkUserCredentials() {
-    const storedUsername = localStorage.getItem('username');
-    const storedEmail = localStorage.getItem('email');
-    const storedPassword = localStorage.getItem('password');
-
-    // If any of the credentials are missing, redirect to the login page
-    if (!storedUsername || !storedEmail || !storedPassword) {
-        window.location.href = 'login.html'; // Change to your actual login page
-        return;
-    }
-
-    // Retrieve users from local storage
-    const users = JSON.parse(localStorage.getItem('authorizedUsers')).users;
-
-    // Check against authorized users
-    const user = users.find(user =>
-        user.username === storedUsername &&
-        user.email === storedEmail &&
-        user.password === storedPassword
-    );
-
-    if (!user) {
-        // If user does not match, add Google to history
-        window.history.pushState({}, '', 'index.html');
-
-        // Redirect to the login page
-        window.location.href = 'login.html'; // Change to your actual login page
-    }
-    else {
-        window.history.pushState({}, '', 'index.html');
-        // User exists, proceed to the main application
-        window.open("main.html", "_parent"); // Or navigate to your main page
+    } catch (error) {
+        // Handle network errors or other unexpected issues
+        console.error("Error during login:", error);
+        openPopup(); // Show error popup for unexpected errors
+        setTimeout(() => window.open("login.html", "_parent"), 2000); // Redirect after a delay
     }
 }
 
-// Wait for 2 seconds before checking credentials
-setTimeout(() => {
-    checkUserCredentials();
-}, 1000);
