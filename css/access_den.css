@@ -1,0 +1,144 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #282c34; /* Dark background */
+    color: #ffffff; /* White text */
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+    max-width: 90%; /* Use percentage for width */
+    width: 600px; /* Maximum width for larger screens */
+    padding: 20px;
+    border: 5px dashed #ff4757; /* Playful dashed border */
+    border-radius: 10px;
+    animation: bounce 0.5s infinite alternate; /* Bounce animation */
+    display: flex;
+    flex-direction: column;
+}
+
+.container h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    animation: fadeIn 1s; /* Fade in animation */
+}
+
+.container p {
+    font-size: 1.2rem;
+    margin: 20px 0;
+    animation: slideIn 0.5s ease; /* Slide in animation */
+}
+
+.animated-img {
+    width: 100px;
+    margin: 20px 0;
+    animation: shake 0.5s infinite alternate; /* Shake animation */
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+.retry-btn {
+    background-color: #ff4757; /* Red button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.retry-btn:hover {
+    background-color: #ff6b81; /* Lighter red on hover */
+}
+
+/* Animations */
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes shake {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-5px);
+    }
+}
+
+/* Improved Media Queries */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        width: 90%; /* Adjust width for medium screens */
+        max-width: none; /* Remove max-width for smaller screens */
+    }
+
+    .container h1 {
+        font-size: 2rem; /* Smaller heading for mobile */
+    }
+
+    .container p {
+        font-size: 1rem; /* Smaller paragraph text for mobile */
+    }
+
+    .animated-img {
+        width: 80px; /* Smaller image for mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px; /* Less padding for smaller screens */
+    }
+
+    .container h1 {
+        font-size: 1.5rem; /* Further reduced heading size */
+    }
+
+    .container p {
+        font-size: 0.9rem; /* Further reduced paragraph text */
+    }
+
+    .animated-img {
+        width: 70px; /* Even smaller image */
+    }
+
+    .retry-btn {
+        padding: 8px 16px; /* Smaller button padding */
+        font-size: 0.9rem; /* Smaller button text */
+    }
+}

@@ -1,0 +1,201 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-image: url("assets/bg.jpg");
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container for login box */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+/* Login Box */
+.login-box {
+    background-color: #2b2b2b;
+    border-radius: 10px;
+    padding: 40px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.profile-img {
+    background-image: url("assets/logo.jpg");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    border: 2px solid #00bfa5;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #00bfa5;
+}
+
+/* Input Fields with Floating Labels */
+.input-group {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 10px 10px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    caret-color: #00bfa5;
+    transition: background-color 0.3s ease;
+}
+
+.input-group input:focus {
+    background-color: #444;
+
+}
+
+.input-group .inactive-label {
+    position: absolute;
+    top: 45%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #aaa;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+
+.input-group .active-label {
+    top: -10px;
+    left: 5px;
+    font-size: 12px;
+    color: #00bfa5;
+}
+
+/* Submit Button with Color-Changing Animation */
+.submit-btn {
+    background-color: #00bfa5;
+    color: #fff;
+    padding: 12px;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+
+    transition: background-color 0.3s;
+}
+
+/* Submit Button Hover Effect */
+.submit-btn:hover {
+    background-color: #009d86;
+}
+
+
+
+.m-auto {
+    margin: auto;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+#togglePassword {
+    position: absolute;
+    right: 10px;
+    /* Adjust as needed */
+    top: 50%;
+    /* Center vertically */
+    transform: translateY(-50%);
+    font-size: 20px;
+    /* Adjust size as needed */
+    color: #888;
+    /* Color for the icon */
+}
+
+.m20 {
+    margin-bottom: 30px;
+}
+
+/* Color-Changing Animation */
+@keyframes colorChange {
+    0% {
+        background-color: #00bfa5;
+    }
+
+    25% {
+        background-color: red;
+    }
+
+    50% {
+        background-color: blue;
+    }
+
+    75% {
+        background-color: green;
+    }
+
+    100% {
+        background-color: yellow;
+    }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .login-box {
+        padding: 30px;
+    }
+
+    .profile-img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .submit-btn {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .login-box {
+        padding: 20px;
+    }
+
+    .profile-img {
+        width: 60px;
+        height: 60px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .submit-btn {
+        font-size: 14px;
+    }
+}
