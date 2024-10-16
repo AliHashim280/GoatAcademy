@@ -1,38 +1,53 @@
-// Function to handle user login
-async function loginUser() {
-     
+// Define authorized users directly in the script
+const authorizedUsers = {
+    "users": [
 
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const email = document.getElementById('email').value;
-
-    try {
-        const response = await fetch('/.netlify/functions/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password, email }),
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            // Successful login, redirect to the main page
-            window.location.href = '/main.html';
-        } else {
-            // Access denied, redirect to access denied page
-            console.error(result.message); // Log the message for debugging
-            window.location.href = 'access_denied.html';
+        {
+            "username": "Ali",
+            "email": "alicodes019@gmail.com",
+            "password": "12345678"
+        },
+        {
+            "username": "Hashim",
+            "email": "gbhatti.g1959@gmail.com",
+            "password": "MY-Firstcourse001"
         }
-    } catch (error) {
-        console.error('Error during login:', error);
-        // Optionally, you can redirect or show an error message here
+    ]
+};
+
+// Save authorized users to local storage for testing
+localStorage.setItem('authorizedUsers', JSON.stringify(authorizedUsers));
+
+// Function to check if the user exists
+function checkUser() {
+    // Get input values
+    let username = document.getElementById("username").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    // Retrieve the users from local storage
+    const users = JSON.parse(localStorage.getItem('authorizedUsers')).users;
+
+    // Check if the user exists
+    const user = users.find(user =>
+        user.username === username &&
+        user.email === email &&
+        user.password === password
+    );
+
+    if (user) {
+        // User exists, store credentials in local storage
+        localStorage.setItem('username', username);
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password);
+
+        // Redirect to Google
+        window.open("main.html", "_parent");
+    } else {
+        // User does not exist, redirect to access denied page
+        window.open("access_denied.html", "_parent");
     }
 }
-
-// Attach the event listener to the login form
-document.getElementById('loginForm').addEventListener('submit', loginUser);
 
 function togglePassword() {
     const passwordInput = document.getElementById("password");

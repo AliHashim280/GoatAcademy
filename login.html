@@ -19,7 +19,7 @@
 
 
             <form name="Client Info" id="loginForm" method="POST" data-netlify="true"
-                onsubmit="submit; event.preventDefault(); loginUser();">
+                onsubmit="event.preventDefault(); checkUser();">
                 <div class="input-group m20">
                     <input type="text" id="username" name="username" required>
                     <label class="inactive-label" for="username">Username</label>
